@@ -1,0 +1,98 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block head_title %}Base HTML{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% block extra_head %}
+    {% endblock %}
+    {% tailwind_css %}
+  </head>
+  <body class="bg-gray-50 font-serif leading-normal tracking-normal">
+    {% block body %}
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+       <!-- This example requires Tailwind CSS v2.0+ -->
+      <div class="bg-indigo-600" id="msg-container">
+        <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between flex-wrap">
+            <div class="w-0 flex-1 flex items-center">
+              <span class="flex p-2 rounded-lg bg-indigo-800">
+                <!-- Heroicon name: outline/speakerphone -->
+                {% include "account/success_tick_message.html" %}
+              </span>
+              <p class="ml-3 font-medium text-white truncate">
+                <span class="md:hidden"> Success! </span>
+                <span class="hidden md:inline">{{message}}</span>
+              </p>
+            </div>
+            <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
+              <button id="close-msg" type="button" class="-mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2">
+                <span class="sr-only">Dismiss</span>
+                <!-- Heroicon name: outline/x -->
+                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="hidden">
+      <strong>Menu:</strong>
+      <ul>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        {% else %}
+        <li><a href="{% url 'account_login' %}">Sign In</a></li>
+        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    {% block content %}
+    {% endblock %}  
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+    <script>
+      (function closeMsg(){
+        let close_msg = document.querySelector('#close-msg');
+        let msg_container = document.querySelector('#msg-container');
+        if (close_msg != null || close_msg != undefined) {
+          close_msg.addEventListener('click', () => {
+            msg_container.style.display = 'none';
+          });
+        }
+      })();
+      (function sayGreeting() {
+        /*
+          Set greetings depending on the time of the day.
+        */
+        let hour = new Date().getHours();
+        let para = document.getElementById('greetings') || null;
+        if (para != null) {
+          if (hour >= 0 && hour <= 11) {
+            para.textContent = 'Good Morning';
+          } else if (hour >= 12 && hour <= 17) {
+            para.textContent = 'Good Afternoon';
+          } else if (hour >= 18 && hour <= 20) {
+            para.textContent = 'Good Evening';
+          } else {
+            para.textContent = 'Good Night';
+          }  
+        }
+      })();
+    </script>
+  </body>
+</html>
