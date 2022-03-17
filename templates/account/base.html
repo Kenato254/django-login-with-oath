@@ -10,6 +10,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     {% block extra_head %}
     {% endblock %}
+    <style>
+      ul.errorlist {
+        text-align: justify;
+        font-weight: 800;
+        padding: .25em;
+        margin: .25em;
+        border-radius: 5px;
+        color: #ff0000;
+      }
+    </style>
     {% tailwind_css %}
   </head>
   <body class="bg-gray-50 font-serif leading-normal tracking-normal">

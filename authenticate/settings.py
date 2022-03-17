@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     
     #? Third Party Apps
+    "debug_toolbar",
     "crispy_forms",
     "crispy_tailwind",
 
@@ -48,10 +49,15 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.CommonMiddleware',    
     'django.middleware.csrf.CsrfViewMiddleware',
+    #? Third Party Middleware
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    #???
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    #? Third Party Middleware
     "django_browser_reload.middleware.BrowserReloadMiddleware",
+    #???
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -162,6 +168,13 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',  
 ]
+#! Caching 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
 
 #! Tailwind CSS
 TAILWIND_APP_NAME = 'theme'
@@ -172,4 +185,5 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 
 INTERNAL_IPS = [
     "localhost",
+    "127.0.0.1",
 ]
