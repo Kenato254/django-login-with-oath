@@ -2,7 +2,7 @@
 ### Intro ##
 ### This is a simple authenication app developed using Django Web Framework. After building the previous Authentication  app without social accounts I decided to build another, this time with social accounts. This mini-app can be easily integrated into a bigger system project. ###
 
-![login-image](screenshot/login.jpg)
+![login-image](screenshots/login.jpg)
 
 ### Features ###
 * Login and Register new user.
